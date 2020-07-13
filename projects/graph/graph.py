@@ -13,41 +13,54 @@ class Graph:
         """
         Add a vertex to the graph.
         """
-        pass  # TODO
+        self.vertices[vertex_id] = set()
 
     def add_edge(self, v1, v2):
         """
         Add a directed edge to the graph.
         """
-        pass  # TODO
+        self.vertices[v1].add(v2)
 
     def get_neighbors(self, vertex_id):
         """
         Get all neighbors (edges) of a vertex.
         """
-        pass  # TODO
+        return self.vertices[vertex_id]
+        
 
     def bft(self, starting_vertex):
         """
         Print each vertex in breadth-first order
         beginning from starting_vertex.
         """
-        # pass  # TODO
+        # pass 
         # make a queue
+        q = Queue()
         # enqueue our starting node
+        q.enqueue(starting_vertex)
 
         #make a set to track if we'vebeen here before. don't want go to there twice
+        visited = set()
+
+        result = []
 
         # while our queue isn't empty, 
+        while q.size() > 0:
         # dequeue whatevers at the front of the line, this is our current_node
-
+            current_node = q.dequeue()
         ## if we havent visited this node yet
+            if current_node not in visited:
         ### mark as visited
+                visited.add(current_node)
         ###print the vertex
+                result.append(current_node)
         ### get its neighbors
+                neighbors = self.get_neighbors(current_node)
         ### add neighbors to queue (for each of the neighbors, add to queue)
-        
-        
+                for neighbor in neighbors:
+                    ## add to queue
+                    q.enqueue(neighbor)
+        print(",".join(str(x) for x in result))
         #which goes in first?  1 
         # q = Queue()
         # visited = set(1,2,3,4,5,6,7)
@@ -67,31 +80,44 @@ class Graph:
         beginning from starting_vertex.
         """
         #stack
+        s = Stack()
         #push on our starting node
+        s.push(starting_vertex)
 
         #make a set to track if we've been here before
+        visited = set()
 
+        results = []
         #while our stack isn't empty
+        while s.size() > 0:
         ## pop off whatevers on top, this is the current_node
-
+            current_node = s.pop()
         ## if we haven't visited this vertex before
+            if current_node not in visited:
+        ###print
+                # print(current_node)
         ### mark as visited
+                visited.add(current_node)
+                results.append(current_node)
         ### get its neighbors
+                neighbors = self.get_neighbors(current_node)
         ### for each of the neighbors
+                for neighbor in neighbors:
         ### add to our stack
+                    s.push(neighbor)
+        print(",".join(str(x) for x in results))
+        # s = Stack(
+        #     5,
+        #     1,
+        #     6,
+        #     3,
+        # )
 
-        s = Stack(
-            5,
-            1,
-            6,
-            3,
-        )
+        # visted = set(1,2,4,7,6,3) #5
 
-        visted = set(1,2,4,7,6,3) #5
+        # current_node = 3
 
-        current_node = 3
-
-        neighbors = [5]
+        # neighbors = [5]
 
     def dft_recursive(self, starting_vertex):
         """
