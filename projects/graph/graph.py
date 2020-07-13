@@ -126,7 +126,48 @@ class Graph:
 
         This should be done using recursion.
         """
-        pass  # TODO
+        #stack
+        s = Stack()
+        #push on our starting node
+        s.push(starting_vertex)
+        #make a set to track if we've been here before
+        visited = set()
+        results = []
+        if s.size() > 0:
+            current_node = s.pop()
+        if current_node not in visited:
+            self.dft(starting_vertex)
+        print(",".join(str(x) for x in results))
+        # if s.size() > 0:
+        #     current_node = s.pop()
+        # if current_node not in visited:
+        #     visited.add(current_node)
+        #     results.append(current_node)
+        #     neighbors = self.get_neighbors(current_node)
+        #     return dft_recursive(self, current_node)
+
+        #     for neighbor in neighbors:
+        #         s.push(neighbor)
+        # print(",".join(str(x) for x in results))
+
+        #while our stack isn't empty
+        # while s.size() > 0:
+        ## pop off whatevers on top, this is the current_node
+            # current_node = s.pop()
+        ## if we haven't visited this vertex before
+            # if current_node not in visited:
+        ###print
+                # print(current_node)
+        ### mark as visited
+                # visited.add(current_node)
+                # results.append(current_node)
+        ### get its neighbors
+                # neighbors = self.get_neighbors(current_node)
+        ### for each of the neighbors
+                # for neighbor in neighbors:
+        ### add to our stack
+                    # s.push(neighbor)
+        # print(",".join(str(x) for x in results))
 
     def bfs(self, starting_vertex, destination_vertex):
         """
