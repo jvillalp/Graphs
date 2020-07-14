@@ -119,55 +119,24 @@ class Graph:
 
         # neighbors = [5]
 
-    def dft_recursive(self, starting_vertex):
+    def dft_recursive(self, starting_vertex, visited = {}):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
 
         This should be done using recursion.
         """
-        #stack
-        s = Stack()
-        #push on our starting node
-        s.push(starting_vertex)
-        #make a set to track if we've been here before
         visited = set()
         results = []
-        if s.size() > 0:
-            current_node = s.pop()
-        if current_node not in visited:
-            self.dft(starting_vertex)
+        self.recursiveDFSHelper(starting_vertex, visited, results)
         print(",".join(str(x) for x in results))
-        # if s.size() > 0:
-        #     current_node = s.pop()
-        # if current_node not in visited:
-        #     visited.add(current_node)
-        #     results.append(current_node)
-        #     neighbors = self.get_neighbors(current_node)
-        #     return dft_recursive(self, current_node)
 
-        #     for neighbor in neighbors:
-        #         s.push(neighbor)
-        # print(",".join(str(x) for x in results))
-
-        #while our stack isn't empty
-        # while s.size() > 0:
-        ## pop off whatevers on top, this is the current_node
-            # current_node = s.pop()
-        ## if we haven't visited this vertex before
-            # if current_node not in visited:
-        ###print
-                # print(current_node)
-        ### mark as visited
-                # visited.add(current_node)
-                # results.append(current_node)
-        ### get its neighbors
-                # neighbors = self.get_neighbors(current_node)
-        ### for each of the neighbors
-                # for neighbor in neighbors:
-        ### add to our stack
-                    # s.push(neighbor)
-        # print(",".join(str(x) for x in results))
+    def recursiveDFSHelper(self, starting_vertex, visited,results):
+        if starting_vertex not in visited:
+            visited.add(starting_vertex)
+            results.append(starting_vertex)
+            for neighbor in self.get_neighbors(starting_vertex):
+                self.recursiveDFSHelper(neighbor, visited, results)
 
     def bfs(self, starting_vertex, destination_vertex):
         """
@@ -175,7 +144,7 @@ class Graph:
         starting_vertex to destination_vertex in
         breath-first order.
         """
-        pass  # TODO
+        pass
 
     def dfs(self, starting_vertex, destination_vertex):
         """
