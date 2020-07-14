@@ -2,7 +2,6 @@
 Simple graph implementation
 """
 from util import Stack, Queue  # These may come in handy
-
 class Graph:
 
     """Represent a graph as a dictionary of vertices mapping labels to edges."""
@@ -72,7 +71,6 @@ class Graph:
         #  \    |
         #   \   4
         #    7  
-
 
     def dft(self, starting_vertex):
         """
@@ -144,7 +142,22 @@ class Graph:
         starting_vertex to destination_vertex in
         breath-first order.
         """
-        pass
+        queue =[(starting_vertex, [])]
+        visited = set()
+
+        while len(queue) > 0:
+            node, path = queue.pop(0)
+            path.append(node)
+            visited.add(node)
+            if node == destination_vertex:
+                return path
+            
+            for neighbor in self.get_neighbors(node):
+                if neighbor not in visited:
+                    queue.append((neighbor, path[:]))
+        
+        return None
+        
 
     def dfs(self, starting_vertex, destination_vertex):
         """
