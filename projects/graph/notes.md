@@ -35,3 +35,10 @@ end_word = "boat"
     Node: words
     Edges: there's an edge if words are different by one letter an both are in the word list
 
+DFS a better choice?
+- Maybe if you want longest path or most relations
+- Might be faster, since it goes to a leaf first
+
+If visiting all nodes, then either will work, O(n)
+
+- can do it recursely?

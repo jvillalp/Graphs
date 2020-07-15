@@ -19,12 +19,12 @@ word__list = set()
 for word in words:
         word__list.add(word.lower())
 
-def get_neighbors(start_word):
+def get_neighbors(word):
     neighbors = []
     #for every letter in the word
-    for letter_index in range(len(start_word)):
+    for letter_index in range(len(word)):
         for letter in string.ascii_lowercase:
-            word_list = list(start_word)
+            word_list = list(word)
             word_list[letter_index] = letter
                 
             word = "".join(word_list)
