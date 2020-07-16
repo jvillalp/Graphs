@@ -31,7 +31,8 @@ class Graph:
         self.vertices = {}
 
     def add_vertex(self, vertex):
-        self.vertices[vertex] = set()
+        if vertex not in self.vertices:
+            self.vertices[vertex] = set()
 
     def add_edge(self, v1, v2):
         self.vertices[v1].add(v2)
@@ -58,7 +59,7 @@ def earliest_ancestor(ancestors, starting_node):
 
     s.push([starting_node])
 
-    longest_path = []
+    longest_path = [starting_node]
     aged_one = -1
 
     while s.size() > 0:
@@ -67,8 +68,9 @@ def earliest_ancestor(ancestors, starting_node):
 
         #if path is longer, or path is equal but the id is smaller
 
-        if len(path) > len(longest_path) or (len(path))== len(longest_path) and current_node < aged_one:
+        if (len(path) > len(longest_path)) or (len(path)== len(longest_path) and current_node < aged_one):
             longest_path = path
+            aged_path = longest_path[-1]
 
         if current_node not in visited:
             visited.add(current_node)
@@ -76,11 +78,10 @@ def earliest_ancestor(ancestors, starting_node):
             parents = graph.get_neighbors(current_node)
 
             for parent in parents:
-                new_path = path  + [parent]
+                new_path = path + [parent]
                 s.push(new_path)
 
-
-
+    return aged_one
 
 
     #want to go to one path from starting_node that will lead to oldest ancestor in that path

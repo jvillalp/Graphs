@@ -1,4 +1,5 @@
 import random 
+
 class User:
     def __init__(self, name):
         self.name = name
@@ -8,6 +9,11 @@ class SocialGraph:
         self.last_id = 0
         self.users = {}
         self.friendships = {}
+
+    def fisher_yates_shuffle(self,l):
+        for i in range(0, len(l)):
+            random_index = random.randint(i, len(l) - 1)
+            l[random_index], l[i] = l[i], l[random_index]
 
     def add_friendship(self, user_id, friend_id):
         """
@@ -44,17 +50,35 @@ class SocialGraph:
         self.users = {}
         self.friendships = {}
         # !!!! IMPLEMENT ME
+
         total_friendships = num_users * avg_friendships
+
         # Add users
         ##use num_users to use all the users that we need
-
+        for user in range(num_users):
+            self.add_user(user)
 
         # Create friendships
-        ##make a list with all possible friendships
-        #####Example
+        ## make a list with all possible friendships
+        ### Example
         # 5 users
-        # num_users[(1,2), (1,3), (1,4), (1,5), (2,3), (2,4)]
+        # num_users[(1,2), (1,3), (1,4), (1,5), (2,3), (2,4), (2,5), (3,4), (3,5), (4,5)]
+        friendships = []
+        for user in range(1, self.last_id + 1):
+            for friend in range(user + 1, num_users+1):
+                friendship = (user, friend)
+                friendships.append(friendship)
         ##Shuffle the list
+        self.fisher_yates_shuffle(friendships)
+
+        ## Take as many as we need
+        total_friendships = num_users + avg_friendships
+
+        random_friendships = friendships[:total_friendships//2]
+
+        ## add to self.friendships
+        for friendship in random_friendships:
+            self.add_friendship(friendship[0], friendship[1])
 
     def get_all_social_paths(self, user_id):
         """
@@ -67,6 +91,15 @@ class SocialGraph:
         """
         visited = {}  # Note that this is a dictionary, not a set
         # !!!! IMPLEMENT ME
+
+        #BFS
+        #keep track of nodes you've seen before (dic)
+        ##want to check if node is in dic (already seen)
+        ##want to store path taken to get somewhere
+        ##make copy of the list
+        # as soon as it sees a node, you store node with path taken to 
+        # reach that node and that is guranteed to be the shortest path
+
         return visited
 
 
