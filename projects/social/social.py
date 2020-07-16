@@ -1,9 +1,22 @@
 import random 
+import time
+
 
 class User:
     def __init__(self, name):
         self.name = name
-
+class Queue():
+    def __init__(self):
+        self.queue = []
+    def enqueue(self, value):
+        self.queue.append(value)
+    def dequeue(self):
+        if self.size() > 0:
+            return self.queue.pop(0)
+        else:
+            return None
+    def size(self):
+        return len(self.queue)
 class SocialGraph:
     def __init__(self):
         self.last_id = 0
@@ -52,6 +65,7 @@ class SocialGraph:
         # !!!! IMPLEMENT ME
 
         total_friendships = num_users * avg_friendships
+        
 
         # Add users
         ##use num_users to use all the users that we need
@@ -89,23 +103,98 @@ class SocialGraph:
 
         The key is the friend's ID and the value is the path.
         """
-        visited = {}  # Note that this is a dictionary, not a set
-        # !!!! IMPLEMENT ME
 
-        #BFS
+        q = Queue()
+
+        visited = {}  # Note that this is a dictionary, not a set
+
+        q.enqueue([user_id])
+        #while queue isnt empty
+        while q.size() > 0:
+            #deque the current path
+            path = q.dequeue()
+
+            #grap next vertex from the pat
+            current_user = path[-1]
+            #if it hasnt  been visited, add to our dic
+                        ### another way {friend_id: path}
+                        ## friends = self.friendships{current_user}
+            if current_user not in visited:
+                visited[current_user] = path #mark as visited, and remeber path so far
+                friends = self.friendships[current_user]
+                for friend in friends:
+                    # path_copy = list(path)
+                    # path_copy.append(neighbor)
+                    # q.enqueue(path_copy)
+                    #enquee PATHS to each of our neighbors
+                    q.enqueue(path + [friend]) # make a new path
+        return visited
+
+        #BFS  - shortest path
         #keep track of nodes you've seen before (dic)
+
         ##want to check if node is in dic (already seen)
         ##want to store path taken to get somewhere
         ##make copy of the list
         # as soon as it sees a node, you store node with path taken to 
         # reach that node and that is guranteed to be the shortest path
 
-        return visited
 
+        # ** we can do a BFS for each user and add to visited 
+        # but that will have a bad time complexity
+
+    def linear_populate_graph(self):
+        #reset the graph
+        self.last_id = 0
+        self.users = {}
+        self.friendships = {}
+
+        #add user
+        #use num_users
+        for user in range(num_users):
+            self.add_user(user)
+        #Iterate for number of friendships to generate. 
+        target_number_friendships = num_users * avg_friendships
+        friendships_created = 0
+        # as long as we havent made all the friendships we need
+        while friendships_created < target_number_friendships:
+            #pick two random number betwwen 1 nd the last id
+            friend_one = random.randint(1, self.last_id)
+            friend_two = random.randint(1, self.last_id)
+        # For each, generate random pair. 
+        # Check for existing pair.  
+        # A little above linear.
 
 if __name__ == '__main__':
     sg = SocialGraph()
-    sg.populate_graph(10, 2)
-    print(sg.friendships)
-    connections = sg.get_all_social_paths(1)
-    print(connections)
+
+    start_time = time.time()
+    sg.populate_graph(1000,5)
+    end_time = time.time()
+
+    print(end_time - start_time)
+
+    start_time = time.time()
+    sg.linear_populate_graph(1000,5)
+    end_time = time.time()
+
+    print(end_time - start_time)
+
+    # print(sg.friendships)
+    # connections = sg.get_all_social_paths(1)
+    # print(connections)
+
+#percentage in totaluser in our extended social networks
+# how many people you know divided by how mnay people there are
+
+print(f'{(len(connections)-1)/1000 * 100 }%')
+
+# what is the avg degree of sep between a user and those in his/her extended network?
+# avg length of path to each user
+# traverse a user's extended connectipns, 
+# gather lengths, sum, 
+total_length = 0
+for friend in connections:
+    total_length += len(connections[friend])
+# divide by number of friends in CC
+print(f'Avg degree of seperation: {total_length / len(connections)}')

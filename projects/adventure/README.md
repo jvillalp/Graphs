@@ -1,3 +1,12 @@
+Question: why can't we use a traversal?
+  - traversal will just visit all the nodes
+  - we want a list of directions to guide us step by step
+
+  - Also, we will want to minimize the number of steps
+
+  translating into graph terminologuy
+ If get stuck, BFS?
+
 ## Description
 
 You are provided with a pre-generated graph consisting of 500 rooms. You are responsible for filling `traversal_path` with directions that, when walked in order, will visit every room on the map at least once.
@@ -14,9 +23,15 @@ You may find the commands `player.current_room.id`, `player.current_room.get_exi
 
 To solve this path, you'll want to construct your own traversal graph. You start in room `0`, which contains exits `['n', 's', 'w', 'e']`. Your starting graph should look something like this:
 
+
 ```
+traversal_path = ['s', 's']
 {
   0: {'n': '?', 's': '?', 'w': '?', 'e': '?'}
+  5: {'n':0, 's':6},
+  6: {'n':5, 'w':'?'},
+  ...,
+  4: {'w':'3'}
 }
 ```
 
