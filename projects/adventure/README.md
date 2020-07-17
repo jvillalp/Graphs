@@ -6,6 +6,10 @@ Question: why can't we use a traversal?
 
   translating into graph terminologuy
  If get stuck, BFS?
+ nodes: rooms
+ edges: exits (n,s,w,e)
+ 
+
 
 ## Description
 
